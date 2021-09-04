@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { selectUser } from "../../features/userSlice";
 import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 const PlanScreen = () => {
   const [products, setProducts] = useState([]);
@@ -63,7 +63,10 @@ const PlanScreen = () => {
       if (error) {
         // Show an error to your customer and
         // inspect your Cloud Function logs in the Firebase console.
-        toast.dark(`An error occured: ${error.message}`);
+        toast.error(`An error occured: ${error.message}`, {
+          position:"top-center",
+          transition:Zoom,
+        });
       }
 
       if (sessionId) {
@@ -72,6 +75,7 @@ const PlanScreen = () => {
 
         const stripe = await loadStripe(
          "pk_test_51JCRJzSATfjmaH3cSMEtJEbcyjAvfesGWi6YtbEYw3Ir60QC4RYYXAI1uFKbYKAOB9fbdVPTJbk2lWr5Qz8jLEYR00ibPp0kwR"
+         
 
         );
         stripe.redirectToCheckout({ sessionId });
